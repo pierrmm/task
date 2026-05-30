@@ -4,21 +4,38 @@ import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
-import { Button } from "@/components/ui/button"
-
 export function ThemeToggle({ isSidebarOpen }: { isSidebarOpen: boolean }) {
   const { theme, setTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return <div className="h-10 w-full animate-pulse bg-zinc-100 dark:bg-zinc-900 rounded-lg"></div>
+  }
+
+  const isDark = theme === "dark" || (theme === "system" && typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches)
 
   return (
-    <Button
-      variant="ghost"
-      className={`w-full text-zinc-900 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-800 ${!isSidebarOpen ? 'justify-center px-0' : 'justify-start'}`}
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      title={!isSidebarOpen ? "Toggle theme" : undefined}
-    >
-      <Sun className={`h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 ${isSidebarOpen && 'mr-2'}`} />
-      <Moon className={`absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 ${isSidebarOpen ? 'left-3' : ''}`} />
-      {isSidebarOpen && <span className="ml-4 text-left flex-1">Toggle Theme</span>}
-    </Button>
+    <div className={`flex items-center p-1 rounded-lg bg-zinc-100 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 mb-2 ${!isSidebarOpen ? 'flex-col gap-1' : 'w-full'}`}>
+      <button
+        onClick={() => setTheme("light")}
+        className={`flex items-center justify-center rounded-md p-1.5 transition-all ${!isDark ? 'bg-white shadow-sm text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'} ${isSidebarOpen ? 'w-1/2' : 'w-full'}`}
+        title="Light Mode"
+      >
+        <Sun className="h-4 w-4" />
+        {isSidebarOpen && <span className="ml-2 text-xs font-medium">Light</span>}
+      </button>
+      <button
+        onClick={() => setTheme("dark")}
+        className={`flex items-center justify-center rounded-md p-1.5 transition-all ${isDark ? 'bg-zinc-800 shadow-sm text-zinc-50' : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300'} ${isSidebarOpen ? 'w-1/2' : 'w-full'}`}
+        title="Dark Mode"
+      >
+        <Moon className="h-4 w-4" />
+        {isSidebarOpen && <span className="ml-2 text-xs font-medium">Dark</span>}
+      </button>
+    </div>
   )
 }
