@@ -107,7 +107,7 @@ export default function DashboardLayout({
           </div>
           <Button 
             variant="ghost" 
-            className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50 dark:text-red-500 dark:hover:bg-red-950/50" 
+            className="w-full justify-start text-zinc-900 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-800" 
             onClick={handleLogout}
           >
             <LogOut className="w-4 h-4 mr-2" />
