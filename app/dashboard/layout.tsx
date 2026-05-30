@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { LayoutDashboard, Briefcase, Users, LogOut, Menu, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function DashboardLayout({
   children,
@@ -28,7 +29,7 @@ export default function DashboardLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black flex">
+    <div className="h-screen overflow-hidden bg-white dark:bg-black flex">
       {/* Sidebar */}
       <aside 
         className={`${isSidebarOpen ? 'w-64' : 'w-20'} shrink-0 bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 flex flex-col transition-all duration-300 ease-in-out relative z-20`}
@@ -76,6 +77,7 @@ export default function DashboardLayout({
               </div>
             </div>
           )}
+          <ThemeToggle isSidebarOpen={isSidebarOpen} />
           <Button 
             variant="ghost" 
             className={`w-full text-zinc-900 hover:text-zinc-900 hover:bg-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-800 ${!isSidebarOpen ? 'justify-center px-0' : 'justify-start'}`}
