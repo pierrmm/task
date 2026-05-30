@@ -86,10 +86,10 @@ export default function CandidatesPage() {
       c.job?.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const stages: { id: CandidateStage; label: string; color: string }[] = [
-    { id: "applied", label: "Applied", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800" },
-    { id: "interview", label: "Interview", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800" },
-    { id: "hired", label: "Hired", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800" },
+  const stages: { id: CandidateStage; label: string; color: string; indicator: string }[] = [
+    { id: "applied", label: "Applied", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800", indicator: "bg-blue-500" },
+    { id: "interview", label: "Interview", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800", indicator: "bg-yellow-500" },
+    { id: "hired", label: "Hired", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800", indicator: "bg-green-500" },
   ];
 
   return (
@@ -122,7 +122,10 @@ export default function CandidatesPage() {
           {stages.map((stage) => (
             <div key={stage.id} className={`w-80 rounded-xl border flex flex-col ${stage.color}`}>
               <div className="p-4 border-b border-inherit flex justify-between items-center bg-white/50 dark:bg-zinc-950/50 rounded-t-xl">
-                <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">{stage.label}</h3>
+                <div className="flex items-center gap-2">
+                  <div className={`w-2.5 h-2.5 rounded-full ${stage.indicator}`} />
+                  <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">{stage.label}</h3>
+                </div>
                 <Badge variant="secondary" className="bg-white/50 dark:bg-zinc-800">
                   {filteredCandidates.filter(c => c.stage === stage.id).length}
                 </Badge>
