@@ -5,6 +5,7 @@ import { supabase, Candidate, Job, CandidateStage } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Search, MoreHorizontal, Mail, Phone, Clock, User, X } from "lucide-react";
 
 export default function CandidatesPage() {
@@ -86,25 +87,25 @@ export default function CandidatesPage() {
   );
 
   const stages: { id: CandidateStage; label: string; color: string }[] = [
-    { id: "applied", label: "Applied", color: "bg-slate-100 border-slate-200 dark:bg-slate-800/50 dark:border-slate-800" },
-    { id: "interview", label: "Interview", color: "bg-blue-50 border-blue-100 dark:bg-blue-900/20 dark:border-blue-900/50" },
-    { id: "hired", label: "Hired", color: "bg-emerald-50 border-emerald-100 dark:bg-emerald-900/20 dark:border-emerald-900/50" },
+    { id: "applied", label: "Applied", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800" },
+    { id: "interview", label: "Interview", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800" },
+    { id: "hired", label: "Hired", color: "bg-zinc-50 border-zinc-200 dark:bg-zinc-900/20 dark:border-zinc-800" },
   ];
 
   return (
     <div className="space-y-6 h-[calc(100vh-6rem)] flex flex-col">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Candidate Pipeline</h1>
-          <p className="text-sm text-slate-500">Track and manage candidates across different stages.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">Candidate Pipeline</h1>
+          <p className="text-sm text-zinc-500">Track and manage candidates across different stages.</p>
         </div>
         <div className="flex gap-3 w-full sm:w-auto">
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
             <Input
               type="text"
               placeholder="Search candidates..."
-              className="pl-9 bg-white dark:bg-slate-950"
+              className="pl-9 bg-white dark:bg-zinc-950"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -120,64 +121,68 @@ export default function CandidatesPage() {
         <div className="flex gap-6 h-full min-w-max pb-4">
           {stages.map((stage) => (
             <div key={stage.id} className={`w-80 rounded-xl border flex flex-col ${stage.color}`}>
-              <div className="p-4 border-b border-inherit flex justify-between items-center bg-white/50 dark:bg-slate-950/50 rounded-t-xl">
-                <h3 className="font-semibold text-slate-900 dark:text-slate-50">{stage.label}</h3>
-                <Badge variant="secondary" className="bg-white/50 dark:bg-slate-800">
+              <div className="p-4 border-b border-inherit flex justify-between items-center bg-white/50 dark:bg-zinc-950/50 rounded-t-xl">
+                <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">{stage.label}</h3>
+                <Badge variant="secondary" className="bg-white/50 dark:bg-zinc-800">
                   {filteredCandidates.filter(c => c.stage === stage.id).length}
                 </Badge>
               </div>
               
               <div className="p-3 flex-1 overflow-y-auto space-y-3">
                 {loading ? (
-                  <div className="h-24 bg-white dark:bg-slate-950 rounded-lg animate-pulse" />
+                  <div className="h-24 bg-white dark:bg-zinc-950 rounded-lg animate-pulse" />
                 ) : (
                   filteredCandidates
                     .filter((c) => c.stage === stage.id)
                     .map((candidate) => (
                       <div 
                         key={candidate.id} 
-                        className="bg-white dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm cursor-grab active:cursor-grabbing hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
+                        className="bg-white dark:bg-zinc-950 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm cursor-grab active:cursor-grabbing hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
                       >
                         <div className="flex justify-between items-start mb-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-sm font-medium text-slate-600 dark:text-slate-300">
+                            <div className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
                               {candidate.name.charAt(0).toUpperCase()}
                             </div>
                             <div>
-                              <h4 className="font-semibold text-sm text-slate-900 dark:text-slate-50">{candidate.name}</h4>
-                              <p className="text-xs text-slate-500 font-medium">{candidate.job?.title}</p>
+                              <h4 className="font-semibold text-sm text-zinc-900 dark:text-zinc-50">{candidate.name}</h4>
+                              <p className="text-xs text-zinc-500 font-medium">{candidate.job?.title}</p>
                             </div>
                           </div>
                           <Button variant="ghost" size="icon" className="h-8 w-8 -mr-2 -mt-2">
-                            <MoreHorizontal className="w-4 h-4 text-slate-400" />
+                            <MoreHorizontal className="w-4 h-4 text-zinc-400" />
                           </Button>
                         </div>
                         
                         <div className="space-y-1.5 mb-4">
-                          <div className="flex items-center text-xs text-slate-500 gap-2">
+                          <div className="flex items-center text-xs text-zinc-500 gap-2">
                             <Mail className="w-3.5 h-3.5" /> <span className="truncate">{candidate.email}</span>
                           </div>
                           {candidate.phone && (
-                            <div className="flex items-center text-xs text-slate-500 gap-2">
+                            <div className="flex items-center text-xs text-zinc-500 gap-2">
                               <Phone className="w-3.5 h-3.5" /> <span>{candidate.phone}</span>
                             </div>
                           )}
-                          <div className="flex items-center text-xs text-slate-500 gap-2">
+                          <div className="flex items-center text-xs text-zinc-500 gap-2">
                             <Clock className="w-3.5 h-3.5" /> 
                             <span>{new Date(candidate.applied_at).toLocaleDateString()}</span>
                           </div>
                         </div>
 
                         <div className="flex gap-2">
-                          <select
-                            className="w-full h-8 text-xs px-2 py-1 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-950 dark:focus:ring-slate-300"
-                            value={candidate.stage}
-                            onChange={(e) => updateCandidateStage(candidate.id, e.target.value as CandidateStage)}
+                          <Select 
+                            value={candidate.stage} 
+                            onValueChange={(val) => updateCandidateStage(candidate.id, val as CandidateStage)}
                           >
-                            <option value="applied">Move to Applied</option>
-                            <option value="interview">Move to Interview</option>
-                            <option value="hired">Move to Hired</option>
-                          </select>
+                            <SelectTrigger className="h-8 text-xs">
+                              <SelectValue placeholder="Move to..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="applied">Move to Applied</SelectItem>
+                              <SelectItem value="interview">Move to Interview</SelectItem>
+                              <SelectItem value="hired">Move to Hired</SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
                       </div>
                     ))
@@ -189,23 +194,23 @@ export default function CandidatesPage() {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/50 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white dark:bg-slate-950 rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800 animate-in zoom-in-95 duration-200">
-            <div className="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/50 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white dark:bg-zinc-950 rounded-xl shadow-lg w-full max-w-md overflow-hidden border border-zinc-200 dark:border-zinc-800 animate-in zoom-in-95 duration-200">
+            <div className="flex justify-between items-center p-6 border-b border-zinc-100 dark:border-zinc-800">
               <div>
-                <h2 className="text-lg font-semibold">Add Candidate</h2>
-                <p className="text-sm text-slate-500">Manually add a candidate to the pipeline.</p>
+                <h2 className="text-lg font-semibold text-zinc-950 dark:text-zinc-50">Add Candidate</h2>
+                <p className="text-sm text-zinc-500">Manually add a candidate to the pipeline.</p>
               </div>
               <Button variant="ghost" size="icon" onClick={() => setIsModalOpen(false)}>
                 <X className="w-5 h-5" />
               </Button>
             </div>
 
-            <form onSubmit={handleAddCandidate} className="p-6 space-y-4">
+            <form onSubmit={handleAddCandidate} className="p-6 space-y-4 text-zinc-950 dark:text-zinc-50">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Candidate Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
                   <Input
                     required
                     className="pl-9"
@@ -219,7 +224,7 @@ export default function CandidatesPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Email Address</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
                   <Input
                     type="email"
                     required
@@ -234,7 +239,7 @@ export default function CandidatesPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Phone Number</label>
                 <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
                   <Input
                     className="pl-9"
                     value={newCandidate.phone}
@@ -246,22 +251,25 @@ export default function CandidatesPage() {
 
               <div className="space-y-2 flex flex-col">
                 <label className="text-sm font-medium">Applied For</label>
-                <select
-                  className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 dark:border-slate-800 dark:bg-slate-950"
-                  required
+                <Select
                   value={newCandidate.job_id}
-                  onChange={(e) => setNewCandidate({ ...newCandidate, job_id: e.target.value })}
+                  onValueChange={(val) => setNewCandidate({ ...newCandidate, job_id: val })}
                 >
-                  {jobs.map((job) => (
-                    <option key={job.id} value={job.id}>
-                      {job.title}
-                    </option>
-                  ))}
-                  {jobs.length === 0 && <option value="">No open jobs available</option>}
-                </select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a job" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {jobs.map((job) => (
+                      <SelectItem key={job.id} value={job.id}>
+                        {job.title}
+                      </SelectItem>
+                    ))}
+                    {jobs.length === 0 && <SelectItem value="">No open jobs available</SelectItem>}
+                  </SelectContent>
+                </Select>
               </div>
 
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800 mt-6">
+              <div className="flex justify-end gap-3 pt-4 border-t border-zinc-100 dark:border-zinc-800 mt-6">
                 <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>
                   Cancel
                 </Button>
