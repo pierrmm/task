@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { supabase, Job, JobStatus } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -152,7 +153,9 @@ export default function JobsPage() {
                 </div>
                 
                 <div className="flex items-center gap-3">
-                  <Button variant="outline" size="sm">View Candidates</Button>
+                  <Link href="/dashboard/candidates">
+                    <Button variant="outline" size="sm">View Candidates</Button>
+                  </Link>
                   <Button variant="ghost" size="icon"><Search className="w-4 h-4" /></Button>
                 </div>
               </div>
